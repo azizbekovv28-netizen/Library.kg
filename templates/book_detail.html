@@ -1,0 +1,165 @@
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ blog_id.title }} — Моя библиотека</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            margin: 0;
+            color: #1f2937;
+        }
+
+        header {
+            background: #1e3a8a;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .book-detail {
+            background: white;
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .book-image {
+            display: block;
+            width: 100%;
+            max-width: 350px;
+            max-height: 450px;
+            object-fit: contain;
+            margin: 0 auto 30px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .genre {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 8px 14px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #4b5563;
+            overflow-wrap: anywhere;
+        }
+
+        .date {
+            color: #9ca3af;
+            margin-top: 25px;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            text-align: center;
+            background: #1e293b;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .book-detail {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>📚 Моя библиотека</h1>
+    <p>Подробная информация о книге</p>
+</header>
+
+<main class="container">
+
+    <article class="book-detail">
+
+        {% if blog_id.image %}
+            <img
+                src="{{ blog_id.image.url }}"
+                alt="{{ blog_id.title }}"
+                class="book-image"
+            >
+        {% endif %}
+
+        <h2>{{ blog_id.title }}</h2>
+
+        <span class="genre">
+            {{ blog_id.genre_book }}
+        </span>
+
+        <h3>Описание книги</h3>
+
+        <p class="description">
+            {{ blog_id.description|default:"Описание пока не добавлено."|linebreaksbr }}
+        </p>
+
+        <p class="date">
+            Дата добавления: {{ blog_id.created_at|date:"d.m.Y" }}
+        </p>
+
+        <a href="{% url 'book_list' %}" class="button">
+            ← Вернуться к каталогу
+        </a>
+
+    </article>
+
+</main>
+
+<footer>
+    <p>© 2026 Моя библиотека</p>
+</footer>
+
+</body>
+</html>
+```
