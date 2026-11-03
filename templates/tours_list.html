@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Туры отдыха</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #333;
+        }
+
+        header {
+            background: #198754;
+            color: white;
+            text-align: center;
+            padding: 35px;
+        }
+
+        header h1 {
+            margin-bottom: 10px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .tour-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .tour-title {
+            color: #198754;
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            color: #dc3545;
+            font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .category {
+            display: inline-block;
+            background: #d1e7dd;
+            color: #198754;
+            padding: 7px 12px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 13px;
+        }
+
+        .date {
+            color: gray;
+            margin-top: 15px;
+        }
+
+        .section {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .section h3 {
+            margin-bottom: 15px;
+            color: #198754;
+        }
+
+        .booking {
+            background: #e8f5e9;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .comment {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #198754;
+            margin-bottom: 12px;
+        }
+
+        .comment p {
+            margin: 10px 0;
+        }
+
+        .rating {
+            color: #f39c12;
+            font-weight: bold;
+        }
+
+        .empty {
+            color: gray;
+            font-style: italic;
+        }
+
+        footer {
+            background: #198754;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🌍 Мир путешествий</h1>
+    <p>Выбирай свой идеальный отдых!</p>
+</header>
+
+<div class="container">
+
+    <h2 style="margin-bottom: 25px;">Наши туры</h2>
+
+    {% for t in tour %}
+
+    <div class="tour-card">
+
+        <!-- Информация о туре -->
+
+        <h2 class="tour-title">{{ t.title }}</h2>
+
+        <p class="description">
+            {{ t.description|default:"Описание отсутствует." }}
+        </p>
+
+        <p class="price">
+            💰 {{ t.price }} $
+        </p>
+
+        <!-- Категории -->
+
+        <h3>🏷 Категории отдыха:</h3>
+
+        {% for category in t.category.all %}
+            <span class="category">{{ category.name }}</span>
+        {% empty %}
+            <p class="empty">Категории не указаны.</p>
+        {% endfor %}
+
+        <p class="date">
+            📅 Создан: {{ t.created_at|date:"d.m.Y H:i" }}
+        </p>
+
+
+        <!-- Бронирования -->
+
+        <div class="section">
+
+            <h3>👥 Кто забронировал тур?</h3>
+
+            {% for booking in t.bookingtour_set.all %}
+
+                <div class="booking">
+                    👤 {{ booking.person.name }}
+                </div>
+
+            {% empty %}
+
+                <p class="empty">Пока никто не забронировал этот тур.</p>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- Комментарии -->
+
+        <div class="section">
+
+            <h3>💬 Комментарии пользователей</h3>
+
+            {% for comment in t.commenttour_set.all %}
+
+                <div class="comment">
+
+                    <h4>
+                        👤 {{ comment.person.name|default:"Аноним" }}
+                    </h4>
+
+                    <p>
+                        {{ comment.description }}
+                    </p>
+
+                    <p class="rating">
+                        ⭐ Оценка: {{ comment.mark }}/5
+                    </p>
+
+                    <small>
+                        📅 {{ comment.created_at|date:"d.m.Y H:i" }}
+                    </small>
+
+                </div>
+
+            {% empty %}
+
+                <p class="empty">Пока нет комментариев.</p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+        <p class="empty">Пока туров нет.</p>
+
+    {% endfor %}
+
+</div>
+
+<footer>
+    <p>© 2026 Мир путешествий</p>
+</footer>
+
+</body>
+</html>
