@@ -1,0 +1,7 @@
+<h1>Добавить товар</h1>
+
+<form action="{% url 'add_abit' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p  }}
+    <button type="submit">Добавить товар</button>
+</form>
