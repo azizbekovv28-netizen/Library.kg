@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'tour',
     'myShop',
     'orders',
+    'users',
+    'captcha',
 ]
 
 MIDDLEWARE = [

@@ -5,7 +5,7 @@ class Orders(models.Model):
     product_name = models.CharField(max_length=100)
     quantity = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    img = models.ImageField(upload_to='orders_images/')
+    img = models.ImageField(upload_to='orders_images/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     STATUS_CHOICES = [
         ('Новый', 'Новый'),
