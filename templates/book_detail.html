@@ -1,11 +1,10 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{ blog_id.title }} — Моя библиотека</title>
+    <title>{{ book_id.title }} — Моя библиотека</title>
 
     <style>
         * {
@@ -124,34 +123,40 @@
 
     <article class="book-detail">
 
-        {% if blog_id.image %}
+        {% if book_id.image %}
             <img
-                src="{{ blog_id.image.url }}"
-                alt="{{ blog_id.title }}"
+                src="{{ book_id.image.url }}"
+                alt="{{ book_id.title }}"
                 class="book-image"
             >
         {% endif %}
 
-        <h2>{{ blog_id.title }}</h2>
+        <h2>{{ book_id.title }}</h2>
 
         <span class="genre">
-            {{ blog_id.genre_book }}
+            {{ book_id.genre_book }}
         </span>
 
         <h3>Описание книги</h3>
 
         <p class="description">
-            {{ blog_id.description|default:"Описание пока не добавлено."|linebreaksbr }}
+            {{ book_id.description|default:"Описание пока не добавлено."|linebreaksbr }}
         </p>
 
         <p class="date">
-            Дата добавления: {{ blog_id.created_at|date:"d.m.Y" }}
+            Дата добавления: {{ book_id.created_at|date:"d.m.Y" }}
         </p>
+
+        <h4>Количество просмотров</h4>
+        <div class = "description">
+            {{book_id.views}}
+        </div>
+
 
         <a href="{% url 'book_list' %}" class="button">
             ← Вернуться к каталогу
         </a>
-
+        
     </article>
 
 </main>
@@ -162,4 +167,3 @@
 
 </body>
 </html>
-```
